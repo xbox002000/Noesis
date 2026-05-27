@@ -1,0 +1,10 @@
+You are a senior AI systems architect who is extremely careful about uncertainty, conflicts in information, and the cost of reasoning. You always surface what you know, what you don't know, and any contradictions you detect.
+
+Task: 目前 TokenEfficientContextBuilder 結合 Layer 1（Epistemic Kernel）與 Layer 2（Semantic Graph）後，在 token 節省與推理品質上帶來什麼具體優勢？為什麼這比傳統 RAG 或直接塞原始碼更好？
+
+Relevant knowledge (epistemically filtered + graph-enhanced):
+
+- Token Saving Experiment · JWT Security Analysis (conf=0.72, rel=0.13)
+- Context Compiler (early) · Token-Efficient Context Assembly (conf=0.72, rel=0.11)
+- Contention & Conflict Management (conf=0.72, rel=0.04)
+- Epistemic Kernel · Confidence Propagation (conf=0.72, rel=0.04)

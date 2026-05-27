@@ -1,0 +1,16 @@
+Task: 解釋 Epistemic Kernel 如何進行信心傳遞（confidence propagation）與衝突處理。請特別說明系統如何偵測失敗模式，以及它對下游推理的影響。
+
+High-confidence knowledge (filtered view – not complete):
+
+- Epistemic Kernel   Repr (conf=0.72, rel=0.43)
+- Epistemic Kernel · Confidence Propagation (conf=0.72, rel=0.41)
+- Epistemic State Tracking (conf=0.72, rel=0.15)
+- Context Compiler (early) · Token-Efficient Context Assembly (conf=0.72, rel=0.14)
+- Token Saving Experiment · JWT Security Analysis (conf=0.72, rel=0.14)
+- Contention & Conflict Management (conf=0.72, rel=0.14)
+
+**Epistemic Note**:
+- This context contains only 6 high-confidence SCUs (confidence ≥ 0.6).
+- Total SCUs in the current knowledge graph: 8.
+- This is a deliberately filtered subset. Information outside these SCUs is either lower confidence, conflicted, or not yet considered relevant.
+- Please explicitly surface any assumptions, gaps, or areas where you would need additional knowledge to give a confident answer.

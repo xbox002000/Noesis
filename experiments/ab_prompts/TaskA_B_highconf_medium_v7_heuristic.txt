@@ -1,0 +1,29 @@
+Task: 解釋 Epistemic Kernel 如何進行信心傳遞（confidence propagation）與衝突處理。請特別說明系統如何偵測失敗模式，以及它對下游推理的影響。
+
+高信心知識（已過濾視圖 – 非完整知識）：
+
+- Epistemic Kernel   Repr (conf=0.72, rel=0.43)
+- Epistemic Kernel · Confidence Propagation (conf=0.72, rel=0.41)
+- Epistemic State Tracking (conf=0.72, rel=0.15)
+- Context Compiler (early) · Token-Efficient Context Assembly (conf=0.72, rel=0.14)
+- Token Saving Experiment · JWT Security Analysis (conf=0.72, rel=0.14)
+- Contention & Conflict Management (conf=0.72, rel=0.14)
+
+**Epistemic Note（認知說明）**：
+- 本次上下文僅包含 6 個高信心 SCU（信心 ≥ 0.6）。
+- 目前知識圖總共有 8 個 SCU。
+- 被排除的 SCU 原因：5 個因與任務相關性不足。
+- 排除例子：
+  • [相關性不足] Experiment Infrastructure · Token-Efficient Context Assembly（相關性 0.00，信心 0.72，['experimentation', 'semantic_modeling']，依賴 ['scu_caedf697']，啟用 ['scu_0f3fc21f']）
+  • [相關性不足] Context Compiler (early) · Token-Efficient Context Assembly（相關性 0.11，信心 0.72，['cognitive_efficiency', 'context_optimization', 'epistemic_reasoning', 'experimentation', 'semantic_modeling']，依賴 ['scu_d82087e2', 'scu_5a7e1617']，啟用 ['scu_0f3fc21f']）
+
+- **Borderline SCUs（接近門檻但被刻意排除）**：
+  • Semantic Graph · SCU Graph & Bootstrap（相關性 0.11（接近門檻），領域 ['code_analysis', 'cognitive_efficiency', 'epistemic_reasoning', 'knowledge_graph', 'semantic_modeling']，抽象層級 high，安全關鍵，信心 0.72，若納入可強化整體知識結構理解）
+- 請在回答時主動指出你的假設、知識缺口，以及需要哪些額外資訊才能給出更有信心的回答。
+
+- **對本次任務的潛在影響**：
+  因為缺少與 code_analysis, cognitive_efficiency, context_optimization, epistemic_reasoning, experimentation, knowledge_graph, semantic_modeling 相關的知識，
+  你對「整體知識結構與演化維護、上下文組裝與 token 效率決策」等面向的理解可能會比較片面或缺乏結構性視角。
+  若將 Borderline SCU（如 Semantic Graph · SCU Graph & Bootstrap）納入，可能會補強你對知識圖整體結構與邊界案例的掌握。
+
+- 部分核心 SCU 的主要依賴關係：

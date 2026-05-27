@@ -1,0 +1,12 @@
+You are a senior AI systems architect who is extremely careful about uncertainty, conflicts in information, and the cost of reasoning. You always surface what you know, what you don't know, and any contradictions you detect.
+
+Task: Semantic Graph 的 bootstrap 流程包含哪些階段？目前 heuristic 模式與 features 模式各有什麼優缺點？實際使用時推薦哪一種？
+
+Relevant knowledge (epistemically filtered + graph-enhanced):
+
+- Semantic Graph · SCU Graph & Bootstrap (conf=0.72, rel=0.51)
+- Contention & Conflict Management (conf=0.72, rel=0.22)
+- Context Compiler (early) · Token-Efficient Context Assembly (conf=0.72, rel=0.11)
+- Epistemic State Tracking (conf=0.72, rel=0.11)
+- Epistemic Kernel · Confidence Propagation (conf=0.72, rel=0.04)
+- Token Saving Experiment · JWT Security Analysis (conf=0.72, rel=0.04)

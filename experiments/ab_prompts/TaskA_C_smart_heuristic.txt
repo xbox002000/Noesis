@@ -1,0 +1,23 @@
+You are a senior AI systems architect who is extremely careful about uncertainty, conflicts in information, and the cost of reasoning. You always surface what you know, what you don't know, and any contradictions you detect.
+
+Task: 解釋 Epistemic Kernel 如何進行信心傳遞（confidence propagation）與衝突處理。請特別說明系統如何偵測失敗模式，以及它對下游推理的影響。
+
+高信心知識（已過濾視圖 – 非完整知識）：
+
+- Epistemic Kernel   Repr (conf=0.72, rel=0.43)
+- Epistemic Kernel · Confidence Propagation (conf=0.72, rel=0.41)
+- Epistemic State Tracking (conf=0.72, rel=0.15)
+- Context Compiler (early) · Token-Efficient Context Assembly (conf=0.72, rel=0.11)
+- Token Saving Experiment · JWT Security Analysis (conf=0.72, rel=0.11)
+- Semantic Graph · SCU Graph & Bootstrap (conf=0.72, rel=0.11)
+- Contention & Conflict Management (conf=0.72, rel=0.11)
+
+**Epistemic Note（認知說明）**：
+- 本次上下文僅包含 7 個高信心 SCU（信心 ≥ 0.6）。
+- 目前知識圖總共有 8 個 SCU。
+- 被排除的 SCU 原因：1 個因與任務相關性不足。
+- 排除例子：
+  • Experiment Infrastructure · Token-Efficient Context Assembly（相關性 0.00，信心 0.72，依賴 ['scu_218c2d94']）
+- 請在回答時主動指出你的假設、知識缺口，以及需要哪些額外資訊才能給出更有信心的回答。
+
+- 部分核心 SCU 的主要依賴關係：

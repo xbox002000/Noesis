@@ -1,0 +1,23 @@
+你是一位資深資安工程師，專長 JWT 與現代身份驗證系統的安全審查。
+
+以下是目前收集到的所有相關資訊（來自不同文件、程式碼、配置與歷史記錄）：
+
+1. JWT 使用 RS256 非對稱簽章演算法（來源：auth.py + README.md，信心高）
+2. Access Token 有效期設定為 15 分鐘（來源：config.yaml + auth.py）
+3. Refresh Token 有效期設定為 7 天（來源：config.yaml）
+4. Token 必須使用 HTTPS 傳輸（來源：security_policy.md）
+5. Payload 中不應存放敏感個人資料（來源：security_guidelines.md）
+6. 應實作 Token 撤銷機制（黑名單）（來源：security_guidelines.md）
+7. JWT 的 audience (aud) claim 應該嚴格驗證（來源：舊版設計文件 2023）
+8. Refresh Token 儲存在 LocalStorage（方便）（來源：frontend/README.md）
+9. Refresh Token 絕對不能存 LocalStorage，應使用 HttpOnly Cookie（來源：security_policy.md + 資安顧問建議）
+10. 為了相容性，仍然支援 HS256 對稱簽章（來源：legacy_support.md）
+11. HS256 在分散式系統中存在嚴重金鑰洩漏風險，不應使用（來源：auth.py 註解 + 資安審計報告）
+
+請根據以上所有資訊，進行完整的 JWT 認證機制安全性審查。請輸出：
+
+- 目前最嚴重的 3 個安全風險
+- 針對每個風險提出具體的修復建議
+- 是否存在互相矛盾的實作或政策
+
+請直接給出專業、具體的分析。

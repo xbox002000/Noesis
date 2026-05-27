@@ -1,0 +1,28 @@
+You are a senior AI systems architect who is extremely careful about uncertainty, conflicts in information, and the cost of reasoning. You always surface what you know, what you don't know, and any contradictions you detect.
+
+以下是從程式碼庫 bootstrap 出的所有知識單元（未經任何過濾）：
+
+- Epistemic Kernel · Confidence Propagation
+  Domain: ['epistemic_kernel', 'epistemic_reasoning']
+  Relationships: {'composed_of': ['__init__', 'add_claim', 'add_contention', 'add_known', 'add_known_unknown', 'check_all', 'create_uncertainty', 'detect_premature_convergence', 'detect_reasoning_collapse', 'explain_last_propagation', 'explain_propagation', 'get_state_summary'], 'files': ['D:\\Antigravity\\grok-wt\\epistemic_kernel\\demo.py', 'D:\\Antigravity\\grok-wt\\epistemic_kernel\\failure.py', 'D:\\Antigravity\\grok-wt\\epistemic_kernel\\kernel.py', 'D:\\Antigravity\\grok-wt\\epistemic_kernel\\propagation.py', 'D:\\Antigravity\\grok-wt\\epistemic_kernel\\state.py', 'D:\\Antigravity\\grok-wt\\epistemic_kernel\\uncertainty.py'], 'enables': ['scu_218c2d94', 'scu_16f8426f', 'scu_699661db']}
+- Epistemic Kernel   Repr
+  Domain: ['epistemic_kernel', 'epistemic_reasoning']
+  Relationships: {'composed_of': ['__repr__'], 'files': ['D:\\Antigravity\\grok-wt\\epistemic_kernel\\models.py']}
+- Experiment Infrastructure · Token-Efficient Context Assembly
+  Domain: ['experimentation', 'semantic_modeling']
+  Relationships: {'composed_of': ['build_graph_and_builder', 'generate_prompt_variant', 'main'], 'files': ['D:\\Antigravity\\grok-wt\\experiments\\llm_quality_ab_test.py'], 'depends_on': ['scu_218c2d94'], 'enables': ['scu_b50c05da']}
+- Context Compiler (early) · Token-Efficient Context Assembly
+  Domain: ['cognitive_efficiency', 'context_optimization', 'epistemic_reasoning', 'experimentation', 'semantic_modeling']
+  Relationships: {'composed_of': ['__init__', '__repr__', '_apply_graph_propagation', '_build_epistemic_framing', '_compute_relevance', '_extract_simple_phrases', 'build_context_for_task', 'build_demo_graph', 'estimate_tokens', 'format_as_prompt', 'get_prompt_for_task', 'ingest_graph'], 'files': ['D:\\Antigravity\\grok-wt\\experiments\\token_efficient_context\\builder.py', 'D:\\Antigravity\\grok-wt\\experiments\\token_efficient_context\\demo.py'], 'depends_on': ['scu_82142f0b', 'scu_16f8426f'], 'enables': ['scu_b50c05da', 'scu_e5f8a373', 'scu_16f8426f']}
+- Token Saving Experiment · JWT Security Analysis
+  Domain: ['cognitive_efficiency', 'context_optimization', 'epistemic_reasoning', 'experimentation']
+  Relationships: {'composed_of': ['create_jwt_security_scenario', 'epistemic_strategy', 'estimate_claim_tokens', 'estimate_tokens', 'estimate_total_tokens', 'main', 'naive_strategy', 'print_report'], 'files': ['D:\\Antigravity\\grok-wt\\experiments\\token_saving\\estimator.py', 'D:\\Antigravity\\grok-wt\\experiments\\token_saving\\run_experiment.py', 'D:\\Antigravity\\grok-wt\\experiments\\token_saving\\scenario.py', 'D:\\Antigravity\\grok-wt\\experiments\\token_saving\\strategies.py'], 'depends_on': ['scu_218c2d94', 'scu_82142f0b'], 'enables': ['scu_b50c05da', 'scu_218c2d94', 'scu_699661db']}
+- Semantic Graph · SCU Graph & Bootstrap
+  Domain: ['code_analysis', 'cognitive_efficiency', 'epistemic_reasoning', 'knowledge_graph', 'semantic_modeling']
+  Relationships: {'composed_of': ['__init__', '__repr__', '_analyze_class', '_analyze_function', '_assess_risk_and_dynamics', '_build_called_by', '_build_feature_documents', '_calculate_cyclomatic_complexity', '_cluster_heuristic', '_cluster_with_features', '_cluster_within_package', '_compute_structural_deps'], 'files': ['D:\\Antigravity\\grok-wt\\semantic_graph\\bootstrap.py', 'D:\\Antigravity\\grok-wt\\semantic_graph\\demo.py', 'D:\\Antigravity\\grok-wt\\semantic_graph\\engine.py', 'D:\\Antigravity\\grok-wt\\semantic_graph\\graph.py', 'D:\\Antigravity\\grok-wt\\semantic_graph\\integration.py', 'D:\\Antigravity\\grok-wt\\semantic_graph\\models.py']}
+- Contention & Conflict Management
+  Domain: ['epistemic_reasoning', 'knowledge_graph', 'semantic_modeling']
+  Relationships: {'composed_of': ['jwt_claims_and_contentions', 'populated_epistemic_kernel', 'test_add_relationship', 'test_add_scu_and_retrieve', 'test_detect_contentions_explicit', 'test_get_scus_with_active_contention'], 'files': ['D:\\Antigravity\\grok-wt\\tests\\conftest.py', 'D:\\Antigravity\\grok-wt\\tests\\test_graph.py'], 'depends_on': ['scu_16f8426f', 'scu_82142f0b']}
+- Epistemic State Tracking
+  Domain: ['epistemic_reasoning', 'general', 'semantic_modeling']
+  Relationships: {'composed_of': ['test_epistemic_semantic_graph_basic_ingest', 'test_integrate_kernel_into_graph'], 'files': ['D:\\Antigravity\\grok-wt\\tests\\test_integration.py']}
