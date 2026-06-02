@@ -11,7 +11,9 @@ Noesis is an experimental runtime designed from the ground up for AI systems tha
 
 > "Uncertainty is not a bug — it is the fundamental input to every inference step."
 
-**⭐ This project is early-stage research (currently 1 star) but delivers concrete, measurable improvements in token efficiency and epistemic honesty for LLM agents.** If you believe in building more reliable AI systems, please consider starring the repo — it helps visibility for open-source programs and future contributors.
+**⭐ This project is early-stage research (currently 1 star) but delivers concrete, measurable improvements in token efficiency and epistemic honesty for LLM agents.** 
+
+**v0.1.0-alpha is now available on GitHub Releases!** If you believe in building more reliable AI systems, please consider starring the repo — it helps visibility for open-source programs (e.g. OpenAI Codex) and future contributors. Every star counts at this stage.
 
 ---
 
@@ -101,13 +103,15 @@ Higher layers (Cognitive Scheduler, Agent Ecology, Evolution Engine, Governance)
 
 ### 1. Install & Use the CLI (Recommended for Real Work)
 
+**v0.1.0-alpha released!** [GitHub Releases](https://github.com/xbox002000/Noesis/releases/tag/v0.1.0-alpha)
+
 ```bash
 git clone https://github.com/xbox002000/Noesis.git
 cd Noesis
 pip install -e .
 
 # One of the most practical commands for large organizations:
-noesis build-context \
+python -m noesis build-context \
   --codebase . \
   --task "Review recent authentication and payment changes for security and compliance issues" \
   --max-tokens 1800 \
@@ -119,6 +123,8 @@ Or via python module (reliable everywhere):
 ```bash
 python -m noesis build-context --codebase /path/to/your/monorepo --task "..." --max-tokens 2000
 ```
+
+We ship `requirements.txt` (explains the intentional zero core dependencies + how to opt-in to clustering/LLM features) and `requirements-dev.txt`. **No requirements.txt install step is needed for core + CLI usage.**
 
 The `build-context` command bootstraps SCUs with cleaned relationships (Phase 1.5) and returns a compact, epistemically honest context ready for your LLM.
 

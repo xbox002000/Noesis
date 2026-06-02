@@ -1,0 +1,37 @@
+=== 1. Why this codebase qualifies for the application? (max 500 characters) ===
+This open-source (MIT) research project develops foundational primitives for trustworthy AI agents that reason under uncertainty.
+
+Key results: 99.7% token reduction vs naive prompting and Medium honesty at 8.20/9.00 (91% of Smart) in evaluations.
+
+Phase 1.4 added structured SCU relationships with strength and source. The work makes uncertainty first-class, directly addressing hallucinations in LLM agents.
+
+v0.1.0-alpha just released (packaging + real CLI + requirements.txt + Phase 1.5 cleanup). With public reports and clean code, it offers immediate practical value for reliable agent systems.
+
+=== 2. Why does your project need Codex Security? (max 500 characters) ===
+The project needs secure access to frontier models to improve SCU bootstrapping and context assembly beyond heuristics.
+
+Credits will enable LLM-powered semantic analysis, relationship inference, and richer Epistemic Notes. This is required to scale testing on larger codebases and prototype higher layers (scheduling, ecology) with real calls.
+
+The security program aligns with our emphasis on provenance, trust, contention detection, and auditable reasoning.
+
+=== 3. How will you use the API credits to complete your project? (max 500 characters) ===
+To power LLM-assisted SCU generation and relationship extraction for higher quality.
+
+To run large-scale A/B tests and human evaluations with our llm_quality_ab_test framework.
+
+To prototype higher layers (Cognitive Scheduler, Evolution Engine) using real model calls for uncertainty-aware decomposition and routing.
+
+To benchmark on external repositories for token savings and honesty at scale.
+
+All usage will be logged with epistemic metadata; results published openly.
+
+=== 4. Any other information? (max 500 characters) ===
+Pure research prototype (not commercial) with public blueprint for AI-native cognitive systems. Committed to open research and epistemic honesty.
+
+Recent milestone: Phase 1.4 + 1.5 (structured relationships + cleanup) completed. v0.1.0-alpha released with real CLI, pip packaging, and requirements files.
+
+We will share all prompts, logs, and findings from credit usage. This advances safer, more efficient AI agents.
+
+Org ID: org-qnAORPobDI3bvoiuvabXkLVW
+
+No other funding or conflicts.
