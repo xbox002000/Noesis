@@ -26,12 +26,12 @@ Currently, `SCU.relationships` is stored as `Dict[str, List[str]]`. This is too 
 We need to evolve the storage format while maintaining backward compatibility where possible.
 
 ### Acceptance Criteria
-- [ ] Define a clear structure for individual relationships (recommend using `Dict` or a small dataclass)
-- [ ] Update `SCU.add_relationship()` to accept `strength`, `confidence`, `source`, and other metadata
-- [ ] Update `SCUGraph.add_relationship()` and related methods
-- [ ] Update `infer_cross_scu_relationships` to pass initial strength values
-- [ ] Existing code that reads relationships continues to work (or has a clear migration path)
-- [ ] Add basic validation (e.g., strength between 0.0 and 1.0)
+- [x] Define a clear structure for individual relationships (List[dict] with id/strength/confidence/source for inter-SCU rels; composed_of/files stay List[str])
+- [x] Update `SCU.add_relationship()` to accept `strength`, `confidence`, `source`, and other metadata + helpers get_relationship_ids / get_relationship_details + __post_init__ legacy upgrade
+- [x] Update `SCUGraph.add_relationship()` and related methods (get_related, detect_contentions, + new get_relationship_stats)
+- [x] Update `infer_cross_scu_relationships` to pass initial strength values (based on call frequency)
+- [x] Existing code that reads relationships continues to work (get_* helpers provide full backcompat for legacy list[str])
+- [x] Add basic validation (clamping 0-1 in add_relationship)
 
 ### Suggested Data Structure
 
@@ -220,7 +220,7 @@ Use `CodeClass.bases` and class structure to create `inherits_from` and basic co
 ## Summary & Recommendations
 
 **Must-do in Phase 1**:
-- 1.4 (Data structure)
+- 1.4 (Data structure) ✅ DONE (with strength calc, helpers, stats util, full backcompat)
 - 1.1 (Call graph improvement)
 - 1.5 (Cleanup)
 

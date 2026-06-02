@@ -13,7 +13,7 @@ EpistemicSemanticGraph — Layer 1 + Layer 2 高階整合入口（實用化形�
 - 需要低階控制時，再直接操作 `.graph` 或 `.kernel`
 """
 
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Any
 from epistemic_kernel import EpistemicKernel, KnowledgeClaim
 from .models import SCU
 from .graph import SCUGraph
@@ -94,6 +94,10 @@ class EpistemicSemanticGraph:
 
     def get_scu_by_concept(self, concept: str) -> Optional[SCU]:
         return self.graph.get_scu_by_concept(concept)
+
+    def get_relationship_stats(self) -> Dict[str, Any]:
+        """委派到底層 SCUGraph（Phase 1.4 關係增強後可用）。"""
+        return self.graph.get_relationship_stats()
 
     def __repr__(self):
         return f"EpistemicSemanticGraph(scus={len(self.graph.scus)})"

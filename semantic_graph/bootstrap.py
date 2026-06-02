@@ -877,18 +877,21 @@ def bootstrap_from_codebase(
 
 def infer_cross_scu_relationships(scus: List["SCU"], all_functions: List[CodeFunction]) -> None:
     """
-    根據函式呼叫圖，自動為 SCU 之間建立 depends_on 關係。
+    根據函式呼叫圖，自動為 SCU 之間建立 depends_on / enables 關係（Phase 1.4 強化）。
 
     規則：
     - 如果 SCU_A 裡的某個函式呼叫了屬於 SCU_B 的函式 → A depends_on B
+    - strength 依跨 SCU 呼叫次數計算（頻率越高越強）
+    - 同時建立反向 enables 關係（strength 稍低）
     - 避免自我依賴與重複
     """
     if not scus or not all_functions:
         return
 
     from .models import SCU  # 延遲匯入
+    from collections import defaultdict
 
-    # 建立「函式名稱 → 所屬 SCU」的索引
+    # 建立「函式名稱 → 所屬 SCU」的索引（composed_of 仍是 list[str]）
     func_to_scu: Dict[str, "SCU"] = {}
     for scu in scus:
         members = scu.relationships.get("composed_of", [])
@@ -899,6 +902,9 @@ def infer_cross_scu_relationships(scus: List["SCU"], all_functions: List[CodeFun
     # 反向建立 SCU id → SCU
     id_to_scu = {scu.id: scu for scu in scus}
 
+    # 收集跨 SCU 呼叫次數（用來計算 strength）
+    cross_call_count: Dict[tuple, int] = defaultdict(int)
+
     # 遍歷所有函式，找跨 SCU 呼叫
     for func in all_functions:
         source_scu = func_to_scu.get(func.name)
@@ -908,13 +914,29 @@ def infer_cross_scu_relationships(scus: List["SCU"], all_functions: List[CodeFun
         for called_name in func.calls:
             target_scu = func_to_scu.get(called_name)
             if target_scu and target_scu.id != source_scu.id:
-                # 建立 A depends_on B
-                source_scu.add_relationship("depends_on", target_scu.id)
+                cross_call_count[(source_scu.id, target_scu.id)] += 1
 
-    # 簡單去重（add_relationship 已有保護）
-    # 可以再加一個反向 enables 關係（可選）
+    # 依呼叫頻率加入帶 strength 的 depends_on
+    for (src_id, tgt_id), cnt in cross_call_count.items():
+        # 1 次呼叫 → 0.55 ; 每多 1 次 +0.12 ，上限 1.0
+        strength = min(1.0, 0.55 + (cnt - 1) * 0.12)
+        source = id_to_scu[src_id]
+        source.add_relationship(
+            "depends_on", tgt_id,
+            strength=strength,
+            confidence=0.82,
+            source="call_graph"
+        )
+
+    # 反向建立 enables 關係（強度稍低，代表「被依賴」）
     for scu in scus:
-        for target_id in scu.relationships.get("depends_on", []):
+        for target_id in scu.get_relationship_ids("depends_on"):
             target = id_to_scu.get(target_id)
             if target:
-                target.add_relationship("enables", scu.id)
+                # 反向 strength 取決於正向或固定稍低
+                target.add_relationship(
+                    "enables", scu.id,
+                    strength=0.72,
+                    confidence=0.80,
+                    source="call_graph_reverse"
+                )

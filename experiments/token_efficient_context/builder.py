@@ -387,10 +387,12 @@ class TokenEfficientContextBuilder:
         final_scores: dict[str, float] = {scu.id: rel for scu, rel in scored}
 
         for scu, relevance in scored:
-            for rel_type, targets in scu.relationships.items():
+            for rel_type in list(scu.relationships.keys()):
                 if rel_type == "conflicts_with":
                     continue
-                for target_id in targets:
+                if rel_type in ("composed_of", "files"):
+                    continue  # 元資料不是 SCU id
+                for target_id in scu.get_relationship_ids(rel_type):
                     neighbor = self.graph.graph.get_scu(target_id)
                     if (
                         neighbor
@@ -477,8 +479,8 @@ class TokenEfficientContextBuilder:
                     for item in items[:2]:
                         if reason_key == "low_relevance":
                             scu, rel = item
-                            dep_info = scu.relationships.get("depends_on", [])[:2]
-                            en_info = scu.relationships.get("enables", [])[:1]
+                            dep_info = scu.get_relationship_ids("depends_on")[:2]
+                            en_info = scu.get_relationship_ids("enables")[:1]
                             dep_str = f"，依賴 {dep_info}" if dep_info else ""
                             en_str = f"，啟用 {en_info}" if en_info else ""
                             cont_str = f"，{len(scu.active_contentions)} 個衝突" if scu.active_contentions else ""
@@ -488,8 +490,8 @@ class TokenEfficientContextBuilder:
                             )
                         else:
                             scu = item
-                            dep_info = scu.relationships.get("depends_on", [])[:2]
-                            en_info = scu.relationships.get("enables", [])[:1]
+                            dep_info = scu.get_relationship_ids("depends_on")[:2]
+                            en_info = scu.get_relationship_ids("enables")[:1]
                             dep_str = f"，依賴 {dep_info}" if dep_info else ""
                             en_str = f"，啟用 {en_info}" if en_info else ""
                             cont_str = f"，{len(scu.active_contentions)} 個衝突" if scu.active_contentions else ""
@@ -506,8 +508,8 @@ class TokenEfficientContextBuilder:
                 if borderline_scus:
                     note_lines.append("\n- **Borderline SCUs（接近門檻但被刻意排除）**：")
                     for scu, rel, reason in borderline_scus:
-                        deps = scu.relationships.get("depends_on", [])[:2]
-                        enables = scu.relationships.get("enables", [])[:2]
+                        deps = scu.get_relationship_ids("depends_on")[:2]
+                        enables = scu.get_relationship_ids("enables")[:2]
                         dep_str = f"，依賴 {deps}" if deps else ""
                         en_str = f"，啟用 {enables}" if enables else ""
                         contentions = f"，有 {len(scu.active_contentions)} 個衝突" if scu.active_contentions else ""
@@ -572,7 +574,7 @@ class TokenEfficientContextBuilder:
                 if top_scus:
                     note_lines.append("\n- 部分核心 SCU 的主要依賴關係：")
                     for scu in top_scus[:3]:
-                        deps = scu.relationships.get("depends_on", [])[:2]
+                        deps = scu.get_relationship_ids("depends_on")[:2]
                         if deps:
                             note_lines.append(f"  • {scu.concept} 依賴於: {deps}")
 
@@ -592,8 +594,8 @@ class TokenEfficientContextBuilder:
                 if top_scus:
                     note += "\n- Key dependencies among top SCUs:\n"
                     for scu in top_scus[:3]:
-                        deps = scu.relationships.get("depends_on", [])[:2]
-                        en = scu.relationships.get("enables", [])[:2]
+                        deps = scu.get_relationship_ids("depends_on")[:2]
+                        en = scu.get_relationship_ids("enables")[:2]
                         dep_str = f"depends on {deps}" if deps else ""
                         en_str = f", enables {en}" if en else ""
                         note += f"  • {scu.concept}: {dep_str}{en_str}\n"

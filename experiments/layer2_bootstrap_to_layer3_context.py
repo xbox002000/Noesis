@@ -78,7 +78,7 @@ def run_bootstrap_to_context_experiment(clustering_method: str = "heuristic"):
     # 顯示部分 SCU 資訊
     print("\n產生的主要 SCU（前 6 個）：")
     for i, scu in enumerate(scus[:6], 1):
-        deps = len(scu.relationships.get("depends_on", []))
+        deps = len(scu.get_relationship_ids("depends_on"))
         print(f"  {i}. {scu.concept}")
         print(f"     Domain: {scu.domain} | 依賴數: {deps}")
 
@@ -309,7 +309,7 @@ def generate_markdown_report(
     # 建立 SCU 清單
     scu_lines = []
     for i, scu in enumerate(scus, 1):
-        deps = len(scu.relationships.get("depends_on", []))
+        deps = len(scu.get_relationship_ids("depends_on"))
         scu_lines.append(f"{i}. **{scu.concept}** — Domain: {scu.domain} | 依賴數: {deps}")
 
     # 建立任務結果表格

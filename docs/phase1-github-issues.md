@@ -270,4 +270,6 @@ Medium
 3. 在 Epic Issue 的描述中，把子任務 Issue 編號填上去，形成連結。
 4. 可為所有 Issue 加上相同 Milestone（例如 `Phase 1 - SCU Relationship`）。
 
+**注意**：Task 1.4 已實作完成（含 strength 計算、相容 helper、get_relationship_stats 工具、驗證與測試）。其他子任務可繼續追蹤。
+
 需要我幫你再產生一個「更精簡版」的 Issue 列表（適合快速建立），還是產生一個包含 Assignee / Project 的版本？
