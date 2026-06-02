@@ -1,0 +1,30 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Explicitly declare text files you want to always be normalized to LF.
+*.md text eol=lf
+*.py text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Documents
+*.pdf binary
+
+# Archives
+*.7z  binary
+*.gz  binary
+*.tar binary
+*.zip binary
+
+# Images
+*.jpg  binary
+*.png  binary
+*.gif  binary
+*.ico  binary
+
+# Fonts
+*.eot   binary
+*.otf   binary
+*.ttf   binary
+*.woff  binary
+*.woff2 binary
