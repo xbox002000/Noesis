@@ -839,6 +839,13 @@ def create_scus_from_analysis(
         infer_cross_scu_relationships(scus, analysis.functions)
         print(f"[Bootstrap] 完成跨 SCU 關係推斷")
 
+    # Phase 1.5: Relationship cleanup (practical quality improvement for large orgs)
+    for scu in scus:
+        scu.normalize_relationships(min_strength=0.3)  # prune very weak ones
+
+    if scus:
+        print(f"[Bootstrap] 完成關係正規化與清理 (Phase 1.5)")
+
     return scus
 
 

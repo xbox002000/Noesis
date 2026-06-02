@@ -5,10 +5,13 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Experimental Research](https://img.shields.io/badge/status-experimental%20research-orange)](https://github.com/xbox002000/Noesis)
+[![Stars](https://img.shields.io/github/stars/xbox002000/Noesis?style=social)](https://github.com/xbox002000/Noesis/stargazers)
 
 Noesis is an experimental runtime designed from the ground up for AI systems that must reason under uncertainty, manage finite cognitive resources (tokens, attention), and remain **epistemically honest** about what they know, what they don't know, and where they might be wrong.
 
 > "Uncertainty is not a bug — it is the fundamental input to every inference step."
+
+**⭐ This project is early-stage research (currently 1 star) but delivers concrete, measurable improvements in token efficiency and epistemic honesty for LLM agents.** If you believe in building more reliable AI systems, please consider starring the repo — it helps visibility for open-source programs and future contributors.
 
 ---
 
@@ -94,80 +97,80 @@ Higher layers (Cognitive Scheduler, Agent Ecology, Evolution Engine, Governance)
 
 ---
 
-## Quick Start
+## Quick Start (Practical for Teams & Large Codebases)
 
-### 1. Clone & Run the Practical Demo (Recommended First Step)
+### 1. Install & Use the CLI (Recommended for Real Work)
 
 ```bash
 git clone https://github.com/xbox002000/Noesis.git
 cd Noesis
+pip install -e .
 
-# Core functionality has **no external dependencies**
-python -m experiments.token_efficient_context.demo
+# One of the most practical commands for large organizations:
+noesis build-context \
+  --codebase . \
+  --task "Review recent authentication and payment changes for security and compliance issues" \
+  --max-tokens 1800 \
+  --honesty medium
 ```
 
-This runs a clean end-to-end demonstration of the `TokenEfficientContextBuilder`, showing token comparison, contention avoidance, and rich Epistemic Notes.
-
-### 2. Bootstrap This Project + Build Honest Context (See the Real Numbers)
-
-This example bootstraps the entire Noesis repo (the same flow behind the 99.7% savings reports) and exercises the new Phase 1.4 relationship model:
+Or via python module (reliable everywhere):
 
 ```bash
-python -c '
-from semantic_graph.bootstrap import bootstrap_from_codebase
-from semantic_graph import EpistemicSemanticGraph
-from experiments.token_efficient_context.builder import TokenEfficientContextBuilder
+python -m noesis build-context --codebase /path/to/your/monorepo --task "..." --max-tokens 2000
+```
 
-print("=== Bootstrapping the Noesis codebase (heuristic mode) ===")
-scus = bootstrap_from_codebase(".", clustering_method="heuristic")
-print(f"Produced {len(scus)} SCUs\n")
+The `build-context` command bootstraps SCUs with cleaned relationships (Phase 1.5) and returns a compact, epistemically honest context ready for your LLM.
+
+Other useful commands:
+
+```bash
+python -m noesis stats --codebase .                    # Relationship quality & graph health
+python -m noesis bootstrap --codebase . --output graph.json   # Bootstrap once, reuse
+```
+
+### 2. Use from Python (Drop-in for Your Agents)
+
+```python
+from noesis import bootstrap_from_codebase, EpistemicSemanticGraph, TokenEfficientContextBuilder
+
+# Bootstrap your (large) codebase — run once or on changes
+scus = bootstrap_from_codebase("/path/to/your/production/codebase")
 
 engine = EpistemicSemanticGraph()
 engine.ingest_scus(scus)
 
-stats = engine.get_relationship_stats()
-print("Relationship stats (after Phase 1.4):")
-print(f"  Total inter-SCU relationships: {stats[\"total_inter_scu_relationships\"]}")
-print(f"  Average strength: {stats[\"avg_strength\"]}")
-print(f"  Breakdown: {stats[\"by_type\"]}")
-
-print("\n=== Building medium-honesty context for a task ===")
+# For every agent/LLM call:
 builder = TokenEfficientContextBuilder(graph=engine)
 result = builder.build_context_for_task(
-    "Review the SCU relationship inference and context compilation logic",
-    max_tokens=800,
-    epistemic_honesty_level="medium",   # recommended for most use cases
-    use_graph_propagation=True
+    "Implement the new fraud detection rule and update the relevant docs",
+    max_tokens=2200,
+    epistemic_honesty_level="medium",  # excellent balance for production
 )
 
-print(f"Context size: ~{result.estimated_tokens} tokens")
-print(f"SCUs included: {len(result.included_scus)}")
-print(f"Filtered out reasons: {result.excluded_reason}")
-print("\n--- Epistemic Note preview ---\n")
-print((result.context or "")[:700])
-'
+print("Context tokens:", result.estimated_tokens)
+print("Epistemic Note preview:\n", result.context[:800] if result.context else "")
 ```
 
-Expect very large savings vs. dumping raw source when the task is focused (full systematic results are in the experiment reports).
+This pattern gives you **dramatic cost savings + explicit honesty signals** that large organizations need for auditability and risk reduction.
 
-### 3. Explore the A/B Evaluation Harness
+### 3. Optional: Advanced Clustering + LLM Features
 
 ```bash
-python -m experiments.llm_quality_ab_test --task 0 --honesty-level medium
+pip install noesis[clustering,llm]   # for features mode + real OpenAI calls in evals
 ```
 
-(Requires an LLM client configured for full automated scoring.)
+See `experiments/llm_quality_ab_test.py` for using real models (great once you have OpenAI credits).
 
-**Optional dependencies** (only for the advanced `clustering_method="features"` mode):
-```bash
-pip install numpy scikit-learn
-```
+**Core has zero required dependencies.** Everything practical works out of the box.
 
 ---
 
 ## Architecture Vision (8 Layers)
 
-Noesis follows a complete layered architecture (detailed in [AI_NATIVE_RUNTIME_BLUEPRINT.md](AI_NATIVE_RUNTIME_BLUEPRINT.md)):
+Noesis follows a complete layered architecture (detailed in [AI_NATIVE_RUNTIME_BLUEPRINT.md](AI_NATIVE_RUNTIME_BLUEPRINT.md)).
+
+### High-Level Layers
 
 ```mermaid
 graph TD
@@ -181,7 +184,30 @@ graph TD
     L0[Reality Interface<br/>Signals with provenance & trust] --> L1
 ```
 
-Uncertainty propagates explicitly at every layer and **never disappears**.
+**Uncertainty propagates explicitly at every layer and never disappears.**
+
+### Practical Core (What you use today - Layers 1-3)
+
+For immediate adoption in agents and copilots, focus here:
+
+```mermaid
+flowchart LR
+    A[Your Codebase] -->|bootstrap| B[SCU Graph<br/>Layer 2<br/>with relationships<br/>+ strength]
+    B --> C[EpistemicSemanticGraph]
+    C --> D[TokenEfficientContextBuilder<br/>Layer 3]
+    E[Task / Query] --> D
+    D --> F[Filtered SCUs<br/>+ rich Epistemic Note<br/>99.7% fewer tokens]
+    F --> G[Your LLM Call<br/>higher quality + honesty]
+    subgraph Layer 1
+    H[Epistemic Kernel<br/>confidence + contentions]
+    end
+    B -.-> H
+    D -.-> H
+```
+
+This is the drop-in piece that delivers the dramatic cost savings and explicit "what we don't know" signals that enterprises need for production agents.
+
+See [Quick Start](#quick-start-practical-for-teams--large-codebases) for the CLI and Python usage.
 
 Core principles:
 - Uncertainty is first-class

@@ -146,6 +146,57 @@ class SCU:
                     for tid in items
                 ]
 
+    def normalize_relationships(self, min_strength: float = 0.0) -> None:
+        """
+        Phase 1.5: Clean up this SCU's relationships in place.
+
+        - Removes duplicates (by target id)
+        - Removes self-referential relationships (A depends_on A)
+        - Optionally prunes relationships below min_strength
+        - Only affects inter-SCU relation types (depends_on, enables, conflicts_with, ...)
+        """
+        inter_rel_types = {"depends_on", "enables", "conflicts_with", "inherits_from", "specializes", "composed_of"}  # composed_of is metadata but we keep it simple
+
+        for rt in list(self.relationships.keys()):
+            if rt not in inter_rel_types and rt != "files":
+                continue
+
+            items = self.relationships.get(rt, [])
+            if not items:
+                continue
+
+            seen = set()
+            cleaned = []
+
+            for item in items:
+                if rt in ("composed_of", "files"):
+                    # metadata: simple dedup on value
+                    val = item if isinstance(item, str) else str(item)
+                    if val not in seen:
+                        seen.add(val)
+                        cleaned.append(item)
+                    continue
+
+                # rich relationship
+                if isinstance(item, str):
+                    tid = item
+                    strength = 1.0
+                else:
+                    tid = item.get("id") or item.get("target_id") or ""
+                    strength = float(item.get("strength", 1.0))
+
+                if not tid or tid == self.id:  # self-loop
+                    continue
+                if strength < min_strength:
+                    continue
+                if tid in seen:
+                    continue
+
+                seen.add(tid)
+                cleaned.append(item)
+
+            self.relationships[rt] = cleaned
+
     def __repr__(self):
         return f"SCU[{self.concept}] conf={self.confidence:.2f} level={self.abstraction_level}"
 
@@ -163,3 +214,43 @@ def create_scu_from_claim(claim, uncertainty_type=None) -> SCU:
         change_frequency="volatile",             # JWT 相關通常變化較快
         security_critical=True,
     )
+
+
+def normalize_relationships(scu: SCU, min_strength: float = 0.0) -> None:
+    """
+    Standalone Phase 1.5 helper (also available as SCU.normalize_relationships()).
+    """
+    scu.normalize_relationships(min_strength=min_strength)
+
+
+def get_relationship_stats(scus: list[SCU]) -> dict:
+    """
+    Utility for debugging (Phase 1.5).
+    Returns aggregate stats similar to SCUGraph.get_relationship_stats.
+    """
+    from collections import defaultdict
+    total = 0
+    by_type: dict[str, int] = defaultdict(int)
+    strengths = []
+
+    inter = {"depends_on", "enables", "conflicts_with"}
+
+    for scu in scus:
+        for rt, items in scu.relationships.items():
+            if rt not in inter:
+                continue
+            ids = scu.get_relationship_ids(rt)
+            by_type[rt] += len(ids)
+            total += len(ids)
+            for d in scu.get_relationship_details(rt):
+                strengths.append(float(d.get("strength", 1.0)))
+
+    avg = sum(strengths) / len(strengths) if strengths else 0.0
+    return {
+        "total_scus": len(scus),
+        "total_inter_scu_relationships": total,
+        "by_type": dict(sorted(by_type.items())),
+        "avg_strength": round(avg, 4),
+        "min_strength": round(min(strengths), 4) if strengths else 0.0,
+        "max_strength": round(max(strengths), 4) if strengths else 0.0,
+    }

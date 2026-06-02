@@ -1,4 +1,9 @@
-from .models import SCU, create_scu_from_claim
+from .models import (
+    SCU,
+    create_scu_from_claim,
+    normalize_relationships,
+    get_relationship_stats,
+)
 from .graph import SCUGraph
 from .engine import EpistemicSemanticGraph
 from .bootstrap import (

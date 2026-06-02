@@ -1,0 +1,13 @@
+# Development and testing dependencies for Noesis
+# Install with: pip install -e .[dev] or pip install -r requirements-dev.txt
+
+pytest>=7.0
+black>=23.0
+ruff>=0.1.0
+
+# For running full experiments with real models (optional)
+# openai>=1.0.0
+
+# For features clustering in bootstrap
+# numpy>=1.23
+# scikit-learn>=1.2

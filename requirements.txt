@@ -1,0 +1,23 @@
+# Noesis
+#
+# Core functionality has **zero required dependencies** for basic use:
+# - Heuristic SCU bootstrapping from Python codebases
+# - TokenEfficientContextBuilder (epistemic + graph context assembly)
+# - Epistemic Kernel primitives
+#
+# This is intentional for easy adoption in large organizations and air-gapped environments.
+#
+# Optional features (install via pip install -e .[clustering,llm] or manually):
+#
+# For advanced clustering (features mode in bootstrap):
+# numpy>=1.23
+# scikit-learn>=1.2
+#
+# For real LLM integration in experiments / SCU enrichment (recommended with OpenAI credits):
+# openai>=1.0.0
+#
+# Development / testing:
+# See requirements-dev.txt
+
+# For the absolute minimal (no optionals needed for the CLI and main API):
+# (leave empty - everything works)

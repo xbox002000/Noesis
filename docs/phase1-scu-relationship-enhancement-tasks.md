@@ -128,12 +128,12 @@ def resolve_call_target(
 After relationship inference, we need a reliable cleanup pass to remove duplicates, self-loops, and weak relationships.
 
 ### Acceptance Criteria
-- [ ] A dedicated `normalize_relationships(scu: SCU)` function exists
-- [ ] Duplicate relationships are removed
-- [ ] Self-referential relationships (`A depends_on A`) are filtered
-- [ ] Weak relationships can be optionally pruned based on strength threshold
-- [ ] Cleanup is automatically called at the end of bootstrap process
-- [ ] A utility function `get_relationship_stats(scus)` is available for debugging
+- [x] A dedicated `normalize_relationships(scu: SCU)` function exists (on SCU + standalone)
+- [x] Duplicate relationships are removed
+- [x] Self-referential relationships (`A depends_on A`) are filtered
+- [x] Weak relationships can be optionally pruned based on strength threshold (default 0.3 in bootstrap)
+- [x] Cleanup is automatically called at the end of bootstrap process
+- [x] A utility function `get_relationship_stats(scus)` is available for debugging (also on SCUGraph)
 
 ### Dependencies
 - Task 1.4 (needs the new relationship structure)
