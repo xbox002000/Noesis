@@ -176,6 +176,10 @@ See `experiments/llm_quality_ab_test.py` for using real models (great once you h
 
 Noesis follows a complete layered architecture (detailed in [AI_NATIVE_RUNTIME_BLUEPRINT.md](AI_NATIVE_RUNTIME_BLUEPRINT.md)).
 
+### Visual Overview
+
+![Noesis Architecture](docs/images/noesis-architecture.jpg)
+
 ### High-Level Layers
 
 ```mermaid
