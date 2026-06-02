@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Discussions / Ideas
+    url: https://github.com/xbox002000/Noesis/discussions
+    about: For general questions, ideas, or collaboration on AI-native runtimes, please use Discussions.
+  - name: Research / Blueprint Questions
+    url: https://github.com/xbox002000/Noesis/blob/main/AI_NATIVE_RUNTIME_BLUEPRINT.md
+    about: Read the full architecture vision first.
